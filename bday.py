@@ -19,7 +19,7 @@ def list_posts():
     return result['data']
 
 def bot(wallposts):
-   
+	replied_to=open("replied.txt").read().split()   
     for wallpost in wallposts:
 
         r = requests.get('https://graph.facebook.com/%s' %
@@ -28,15 +28,18 @@ def bot(wallposts):
         url_comments  = 'https://graph.facebook.com/%s/comments' % (wallpost['post_id'])
         url_likes  = 'https://graph.facebook.com/%s/likes' % (wallpost['post_id'])
         user = json.loads(r.text)
-        if wallpost['comments']['count'] is 0 :    # comment only when you haven't commented before 
-
+		        
+		if wallpost['actor_id'] not in replied_to:
             message = 'Thanks ! :D'                                     # comment text 
             payload = {'access_token': TOKEN, 'message': message}
             s = requests.post(url_comments, data=payload)                        # post your comment 
             s = requests.post(url_likes ,data= { 'access_token':TOKEN });     # like friend's post 
+            with open("replied.txt","a") as myfile:
+            	myfile.write(wallpost['actor_id']+'\n')
             print "Commented and liked %s 's post. " % (user['name'])   # log to the console 
             break 
 
 if __name__ == '__main__':
     bot(list_posts())
+
 
