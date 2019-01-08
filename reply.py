@@ -6,7 +6,10 @@ import json
       # You might have to edit permissions for "who can post on my timline" to 'public' . 
 
 linux_timeStamp = '1393785060' # preferably, this should be the time when your friends start posting to your wall 
+
+# NOTE : This is an expired access token, get your own on https://developers.facebook.com/tools/explorer
 TOKEN = "CAACEdEose0cBAFhpqbUjMbOlTOcxRdkkA4cZACyTVcD9HnQ33OqAbVFhStPgeRAro2k5nRhBozBqsawcJJDVKcu0yWW0Qdh4h2AvGHUNdn82uqUOQZCSTfFrFhHBKNs7RkafxqvEvxZAUEvihQBiQzgP4TosAtJoHZCh6lwLZCnO3MoefuVlrGt20jO9sntWQtXqQx7iY6wZDZD"
+
 def list_posts():
    
     query = ("SELECT post_id, actor_id, target_id, message,comments FROM stream WHERE source_id = me() and actor_id != me() AND created_time > 1393785060 limit 200")
